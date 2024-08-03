@@ -1,35 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useTable } from 'react-table';
-import categoryStyle from "./Category.module.css"
+import categoryStyle from "./Category.module.css";
+import DeleteCategory from './DeleteCategory';
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
+  const [deleteCategoryId, setDeleteCategoryId] = useState(null);
+  const navigate = useNavigate();
+  const deleteRef = useRef();
+
+  const showDeletePage = (categoryId) => {
+    setDeleteCategoryId(categoryId);
+    deleteRef.current.style.display = 'block';
+  };
+
+  const cancelDelete = () => {
+    deleteRef.current.style.display = 'none';
+    setDeleteCategoryId(null);
+  };
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/categories')
-      .then(response => {console.log(response.data.data)
-        setCategories(response.data.data)
-        
-        ;
+      .then(response => {
+        setCategories(response.data.data);
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   const columns = React.useMemo(
-    () => [ 
-      { Header: 'Id', accessor: 'id' },
+    () => [
+      { Header: 'Id', accessor: '_id' },
       { Header: 'Category name', accessor: 'name' },
-      { Header: 'Image', accessor: 'image', Cell: ({ value }) => <img src={`http://localhost:5000/uploads/${value}`} alt="Category" width="80" /> },
+      { Header: 'Image', accessor: 'image', Cell: ({ value }) => <img src={`http://localhost:5000/uploads/${value}`} alt="Category" width="80" height="50" /> },
       { Header: 'Status', accessor: 'status', Cell: ({ value }) => <span className={value === 'Active' ? 'active' : 'inactive'}>{value}</span> },
       { Header: 'Sequence', accessor: 'sequence' },
-      { Header: 'Action', accessor: 'action', Cell: () => (
-        <>
-          <button>Edit</button>
-          <button>Delete</button>
-        </>
-      ) },
+      {
+        Header: 'Action', accessor: 'action', Cell: ({ row }) => (
+          <>
+            <button onClick={() => { navigate(`/home/category/edit-category/${row.original._id}`) }}>Edit</button>
+            <button onClick={() => showDeletePage(row.original._id)} className={categoryStyle.showdeleteDiv}>Delete</button>
+          </>
+        )
+      },
     ],
     []
   );
@@ -42,7 +56,7 @@ const Category = () => {
     <div className={categoryStyle.category}>
       <header>
         <h1>Category</h1>
-        <Link to="/add-category" className={categoryStyle.add_category_btn}>Add Category</Link>
+        <Link to="/home/category/add-category" className={categoryStyle.add_category_btn}>Add Category</Link>
       </header>
       <table {...getTableProps()} className={categoryStyle.category_table}>
         <thead>
@@ -67,6 +81,9 @@ const Category = () => {
           })}
         </tbody>
       </table>
+      <div className={categoryStyle.deleteDiv} ref={deleteRef}>
+        {deleteCategoryId && <DeleteCategory categoryId={deleteCategoryId} cancel={cancelDelete} />}
+      </div>
     </div>
   );
 };

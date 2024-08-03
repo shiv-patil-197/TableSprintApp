@@ -1,11 +1,20 @@
 .category {
     padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+     position: absolute;
+     top: 65px;
+     /* border: 2px solid red; */
   }
   
   header {
+    width: 100%;
+    height: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
   }
   
   .add_category_btn {
@@ -20,7 +29,11 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+
   }
+
+
+
   
   .category_table th, .category_table td {
     padding: 10px;
@@ -35,3 +48,15 @@
   .inactive {
     color: red;
   }
+
+  .deleteDiv{
+    height: 300px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    display: none;
+    margin-right: 20px;
+}
+

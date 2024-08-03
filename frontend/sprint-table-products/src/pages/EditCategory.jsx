@@ -1,41 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import "./AddCategory.css"
+import { useNavigate, useParams } from 'react-router-dom';
+import "./EditCategory.css"
 
-const AddCategory = () => {
-  let[idValue , setidValue]=useState(1);
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+const EditCategory = () => {
+  const { id } = useParams();
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = async ({id,name, sequence, image, status}) => {
+  useEffect(() => {
+    // Fetch category details to populate the form
+    axios.get(`http://localhost:5000/api/category/${id}`)
+      .then(response => {
+        const category = response.data;
+        setValue('name', category.name);
+        setValue('sequence', category.sequence);
+        setValue('status', category.status);
+        setValue('image', category.image);
+      })
+      .catch(error => console.error('Error fetching category details:', error));
+  }, [id, setValue]);
 
+  const onSubmit = async ({ name, sequence, status, image }) => {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('sequence', sequence);
-    formData.append('image', image[0]);
     formData.append('status', status);
+    if (image.length > 0) {
+      formData.append('image', image[0]);
+    }
 
     try {
-      await axios.post('http://localhost:5000/api/categories', formData, {
+      await axios.put(`http://localhost:5000/api/categories/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      })
-      .then(response => {
-        reset();
-        navigate('/home/category');
-      })
-      .catch(error => console.error('Error adding category:', error));
+      });
+      reset();
+      navigate('/home/category');
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <div className="add-category">
-      <h1>Add Category</h1>
+    <div className="edit-category">
+      <h1>Edit Category</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
           <label>Category Name</label>
@@ -57,9 +68,8 @@ const AddCategory = () => {
           <label>Upload Image</label>
           <input
             type="file"
-            {...register('image', { required: 'Image is required' })}
+            {...register('image')}
           />
-          {errors.image && <p>{errors.image.message}</p>}
         </div>
         <div className="form-group">
           <label>Status</label>
@@ -77,4 +87,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default EditCategory;

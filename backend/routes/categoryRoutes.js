@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getCategories, createCategory, deleteCategory } = require('../controllers/categoryController');
+const { getCategories, createCategory, deleteCategory,updateCategory,getCategory } = require('../controllers/categoryController');
 const multer = require('multer');
 
 
@@ -22,5 +22,7 @@ console.log('createCategory function:', createCategory);
 router.get('/categories', getCategories);
 router.post('/categories', upload.single('image'), createCategory);
 router.delete('/categories/:id', deleteCategory);
+router.get('/category/:id', getCategory);
+router.put('/categories/:id', upload.single('image'), updateCategory);
 
 module.exports = router;
