@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Dashboard from './components/Dashboard';
 import { AuthProvider } from './components/AuthContext';
 import AddCategory from './pages/AddCategory';
+import EditCategory from './pages/EditCategory';
 
 function App() {
     return (
@@ -27,7 +28,8 @@ function App() {
                         <Route path="products" element={<Products />} />
                     </Route>
                     <Route path="/reset-password" element={<ResetPasswordPage />} />
-                    <Route path="/add-category" element={<AddCategory />} />
+                    <Route path="/home/category/add-category" element={<AddCategory />} />
+                    <Route path="/home/category/edit-category/:id" element={<EditCategory />} />
                 </Routes>
             </Router>
         </AuthProvider>

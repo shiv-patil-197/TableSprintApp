@@ -1,6 +1,6 @@
-/* Logout.css */
+/* DeleteCategory.css */
 
-.logoutPage {
+.DeleteCategoryPage {
     width: 90%;
     height: 50%;
     margin: 0 auto;
@@ -9,9 +9,13 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+    /* border: 2px solid red; */
+    position: absolute;
+    right: -570px;
+    top: -80px;
   }
   
-  .logoutText h2 {
+  .DeleteCategoryText h2 {
     font-size: 24px;
     color: #000;
     display: flex;
@@ -19,25 +23,25 @@
     justify-content: center;
   }
   
-  .logoutText h2::before {
+  .DeleteCategoryText h2::before {
     content: '⚠️';
     font-size: 32px;
     margin-right: 10px;
   }
   
-  .logoutText p {
+  .DeleteCategoryText p {
     font-size: 16px;
     color: #666;
     margin-top: 10px;
   }
   
-  .logoutButtons {
+  .DeleteCategoryButtons {
     display: flex;
     justify-content: center;
     margin-top: 20px;
   }
   
-  .logoutButtons button {
+  .DeleteCategoryButtons button {
     padding: 10px 20px;
     border: none;
     border-radius: 20px;
@@ -46,12 +50,12 @@
     margin: 0 10px;
   }
   
-  .logoutButtons .cancelBtn {
+  .DeleteCategoryButtons .cancelBtn {
     background-color: #eee;
     color: #333;
   }
   
-  .logoutButtons .logoutBtn {
+  .DeleteCategoryButtons .DeleteCategoryBtn {
     background-color:  #480a6edf;
     color: #fff;
   }
