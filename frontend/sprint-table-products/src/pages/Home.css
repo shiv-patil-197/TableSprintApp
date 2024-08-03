@@ -1,0 +1,28 @@
+.fullHomePage{
+    height: 100vh;
+    width: 1500px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    background-color: #e6e6e6;
+}
+.app {
+    display: flex;
+    flex-direction: column;
+    height:90%;
+    width: 60%;
+    /* border: 2px solid rgb(78, 16, 201); */
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+}
+
+.outletDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    background-color: #fff;
+width: 72%;
+}

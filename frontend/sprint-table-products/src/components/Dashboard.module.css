@@ -1,0 +1,51 @@
+/* .fullDashboardPage{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+.app {
+    display: flex;
+    flex-direction: column;
+    height:90%;
+    width: 60%;
+    
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+} */
+
+.dashboard {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 98%;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+    width: 98%;
+    border-left: 1px solid rgba(128, 128, 128, 0.642);
+    border-right: 1px solid  rgba(128, 128, 128, 0.642);
+    border-bottom: 2px solid   rgba(128, 128, 128, 0.642);
+    border-radius: 0px 0px 5px 5px;
+}
+
+.container {
+    text-align: center;
+}
+
+.logo {
+    width: 150px;
+    height: 30px; 
+    
+}
+
+
+.param {
+    font-size: 1.2em;
+    color: #333;
+    font-size: 15px;
+}

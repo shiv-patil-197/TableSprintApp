@@ -1,0 +1,30 @@
+/* src/components/CategoryTable.css */
+
+.data-grid-container {
+    margin-left: 270px; /* Adjust based on sidebar width */
+    padding: 20px;
+}
+
+.data-grid {
+    height: 400px;
+    width: '100%';
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.button-container button {
+    padding: 10px 20px;
+    background-color: #4a148c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.button-container button:hover {
+    background-color: #6a1b9a;
+}

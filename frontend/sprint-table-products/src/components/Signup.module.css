@@ -1,0 +1,83 @@
+.mainDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    margin-left: 200px;
+}
+
+.subDiv {
+    width: 300px;
+    padding: 40px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    
+}
+
+.subDiv h2 {
+    margin-bottom: 20px;
+    color: #4a148c;
+}
+
+.subDiv input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.subDiv button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4a148c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin: 10px 0;
+    transition: background-color 0.3s;
+}
+
+.subDiv button:hover {
+    background-color: #6a1b9a;
+}
+
+.formDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error {
+    color: red;
+    font-size: 10px;
+}
+
+.EpHS0A {
+    margin-top: 10px;
+    color: #4a148c;
+    text-decoration: underline;
+    font-size: 12px;
+    cursor: pointer;
+
+}
+
+.EpHS0A:hover {
+    color: #6a1b9a;
+}
+
+.c9RDXR {
+    color: #4a148c;
+    text-decoration: underline;
+}
+
+.c9RDXR:hover {
+    color: #6a1b9a;
+}
+
+input{
+    outline: none;
+}
