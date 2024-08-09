@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,7 +11,11 @@ const EditCategory = () => {
 
   useEffect(() => {
     // Fetch category details to populate the form
-    axios.get(`http://localhost:5000/api/category/${id}`)
+    axios.get(`http://localhost:5000/api/category/${id}`,{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
       .then(response => {
         const category = response.data;
         setValue('name', category.name);
@@ -19,7 +23,7 @@ const EditCategory = () => {
         setValue('status', category.status);
         setValue('image', category.image);
       })
-      .catch(error => console.error('Error fetching category details:', error));
+      .catch(error => alert(error.response.data.message));
   }, [id, setValue]);
 
   const onSubmit = async ({ name, sequence, status, image }) => {

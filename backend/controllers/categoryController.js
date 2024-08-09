@@ -51,6 +51,7 @@ const createCategory = async (req, res) => {
       res.json(err);
     }
   };
+  
 const deleteCategory = async (req, res) => {
     const { id } = req.params;
     try {

@@ -1,94 +1,99 @@
-const User = require('../models/user')
-const crypto = require('crypto');;
+const User = require('../models/user');
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-const algorithm = 'aes-256-ctr';
-const secretKey = 'VjYzZ3F5d6g7h8j0j2k5l7m1p0q3r5t7'; // Use a 32-byte key
-const iv = crypto.randomBytes(16);
-const redis = require('redis');
-const client = redis.createClient();
 
+const algorithm = 'aes-256-cbc';
+// const secretKey = crypto.randomBytes(32);
+const secretKey = "b7a5e9f3b4c2d1e0f8e4b7e9b2d3f1e4";
+// const iv = crypto.randomBytes(16);
+const iv = "a1b2c3d43cf6d7c8";
 
- const register = async (req, res) => {
+const register = async (req, res) => {
     try {
-        let { fn, confirmPassword, ln, number, email, password } = req.body;
+        const { fn, confirmPassword, ln, number, email, password } = req.body;
         if (fn?.length < 2) {
-            return res.status(400).json({ title: "Bad Request", message: "fn should contain min 2 charcters" })
+            return res.status(400).json({ title: "Bad Request", message: "fn should contain min 2 characters" });
         }
-        // const encryptedPassword = encrypt(password);
-        await User.create({ fn, password, ln, number, email, confirmPassword });
-        res.status(201).json({ message: "student added successfully" })
+        if(password!==confirmPassword){
+            return res.status(400).json({ title: "Bad Request", message: "password and confirmPassword do not match" });
+        }
+        const encryptedpassword = encrypt(password);
+        const encryptedCpassword = encrypt(confirmPassword);
+       let data= await User.create({ fn, password:encryptedpassword, ln, number, email, confirmPassword:encryptedCpassword });
+        res.status(201).json({ message: "User added successfully" ,data:data});
+    } catch (err) {
+        console.error("Error during user creation:", err);
 
-    }
-    catch (err) {
-        console.error("Error during user creation:", err); // Improved error logging
-
-        // Check for duplicate key errors
         if (err.name === 'MongoServerError' && err.code === 11000) {
             const field = Object.keys(err.keyValue)[0];
-            console.log(Object.keys);
             return res.status(400).json({ title: "Duplicate Key Error", message: `${field} already exists` });
         }
 
-        // Handle other errors
         res.status(500).json({ title: "Internal Server Error", message: "An unexpected error occurred" });
     }
+};
+
+function encrypt(text) {
+    const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+    let encrypted = cipher.update(text, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return encrypted;
 }
 
-
-const encrypt = (text) => {
-    const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
-    const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
-
-    return {
-        iv: iv.toString('hex'),
-        content: encrypted.toString('hex')
-    };
-};
-
-const decrypt = (hash) => {
-    const decipher = crypto.createDecipheriv(algorithm, secretKey, Buffer.from(hash.iv, 'hex'));
-    const decrypted = Buffer.concat([decipher.update(Buffer.from(hash.content, 'hex')), decipher.final()]);
-
-    return decrypted.toString();
-};
+function decrypt(encryptedText) {
+    const decipher = crypto.createDecipheriv(algorithm, secretKey, iv);
+    let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+}
 
 const login = async (req, res) => {
     try {
-        const { username ,password } = req.body 
-        console.log(username);
+        const { username, password } = req.body;
         if (!username) {
             return res.status(400).json({ error: true, message: "Username is required" });
         }
-        
-        let  user = await User.findOne({ email: username });
-    
+
+        const user = await User.findOne({ email: username });
         if (!user) {
             return res.json({ error: true, message: "User not found" });
         }
-        // const decryptedPassword = decrypt(user.password);
+ 
+        console.log(user);
+        
+        decryptedPassword=decrypt(user.password);
+        decryptedConfirmPassword=decrypt(user.confirmPassword);
 
-        // if (password !== decryptedPassword) {
-        //     return res.status(400).json({ message: "Invalid email or password" });
-        // }
-        res.json({ error: false, message: "User fetched successfully", data: user , token:req.token});
+       
+        
+
+        if (decryptedConfirmPassword !== password) {
+              return res.json({ error: true, message: "Incorrect password" });
+        }
+        res.json({ error: false, message: "User fetched successfully", data: {
+                ...user._doc,  // Spread the other user details
+                password: decryptedPassword,
+                confirmPassword: decryptedConfirmPassword
+            }, token: req.token });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ error: true, message: err });
     }
 };
 
 
-
-const  logout=(req, res) => {
-    const token = req.header('Authorization').replace('Bearer ', '');
-
-    client.set(token, 'blacklisted', 'EX', 5); // Expire in 5 seconds
-
-    res.status(200).json({ message: 'Logged out successfully' });
+const logout = async (req, res) => {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    try {
+        res.status(200).json({ message: 'Logged out successfully' });
+    } catch (err) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
 };
 
-const authorize=(req, res)=>{
-    res.status(200).json({ message: 'Into the Home Page successfully' }); 
-}
 
-module.exports = {register, login, logout ,authorize}
+const authorize = (req, res) => {
+    res.status(200).json({ message: 'Into the Home Page successfully' });
+};
+
+module.exports = { register, login, logout, authorize };

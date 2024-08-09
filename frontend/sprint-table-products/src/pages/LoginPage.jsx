@@ -4,30 +4,30 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate  } from "react-router-dom";
 import Signup from '../components/SIgnup';
 import axios from "axios";
-import { AuthContext } from "../components/AuthContext"
+// import { AuthContext } from "../components/AuthContext"
 
 const LoginPage = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { setAuth } = useContext(AuthContext);
+    // const { auth,setAuth } = useContext(AuthContext);
     let navigateToDashboard=useNavigate()
     let SendFormData =async ({user,pass}) => {
         console.log(user,pass);
      try{   
        
-        let {data:{data, token}}=await axios.post("http://localhost:5000/api/login",{ username: user , password:pass});  
-        if(!data){
-            alert("username not found");
-        }else if(pass===data.password){
+        let {data:{data, token ,error,message}}=await axios.post("http://localhost:5000/api/login",{ username: user , password:pass});  
+        if(error){
+            alert(message);
+        }else {
             console.log(token);
-            setAuth({ token }); 
+            localStorage.setItem('token', token);
+            // setAuth({ token }); 
             navigateToDashboard("./home")
-        }else{
-            alert("wrong password");
         }
 
      }
      catch(err){
+        alert(err.message)
         console.log(err);
      }
     }

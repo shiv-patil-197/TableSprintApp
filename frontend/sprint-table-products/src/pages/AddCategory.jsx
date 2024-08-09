@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "./AddCategory.css"
 
 const AddCategory = () => {
-  let[idValue , setidValue]=useState(1);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const navigate = useNavigate();
 
@@ -32,6 +31,27 @@ const AddCategory = () => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    const authroizeomePage = async () => {
+        try {
+         await axios.post('http://localhost:5000/api/authorize', {}, 
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+              }
+            }
+          );
+        } catch (error) {
+           alert(error.response.data.message)
+           navigate("/")
+          console.error('Error fetching data:', error);
+        }
+      };
+      authroizeomePage();
+
+}, []);
+  
 
   return (
     <div className="add-category">
