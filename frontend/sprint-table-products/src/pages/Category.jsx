@@ -1,15 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useTable } from 'react-table';
 import categoryStyle from "./Category.module.css";
 import DeleteCategory from './DeleteCategory';
+import { AuthContext } from "../components/AuthContext"
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [deleteCategoryId, setDeleteCategoryId] = useState(null);
+  // const[load, setLoad]=useState(false)
   const navigate = useNavigate();
   const deleteRef = useRef();
+  // const { auth } = useContext(AuthContext)
+  // const [categoryAuth, setCategoryAuth]=useState({token:auth.token})
+
+
+  // const Reload=(isReload)=>{
+  //   setLoad(isReload)
+  //   deleteRef.current.style.display = 'none';
+  // }
 
   const showDeletePage = (categoryId) => {
     setDeleteCategoryId(categoryId);
@@ -20,13 +30,22 @@ const Category = () => {
     deleteRef.current.style.display = 'none';
     setDeleteCategoryId(null);
   };
-
+console.log("reRendered");
   useEffect(() => {
-    axios.get('http://localhost:5000/api/categories')
-      .then(response => {
-        setCategories(response.data.data);
-      })
-      .catch(error => console.error('Error fetching data:', error));
+    const fetchCategories = async () => {
+      try {
+        const {data:{data}} = await axios.get('http://localhost:5000/api/categories', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        console.log(data);
+        setCategories(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchCategories();
   }, []);
 
   const columns = React.useMemo(
@@ -82,7 +101,7 @@ const Category = () => {
         </tbody>
       </table>
       <div className={categoryStyle.deleteDiv} ref={deleteRef}>
-        {deleteCategoryId && <DeleteCategory categoryId={deleteCategoryId} cancel={cancelDelete} />}
+        {deleteCategoryId && <DeleteCategory  categoryId={deleteCategoryId} cancel={cancelDelete} />}
       </div>
     </div>
   );

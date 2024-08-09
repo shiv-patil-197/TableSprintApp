@@ -1,9 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import "./Logout.css"
+import axios from "axios";
 const Logout = ({cancel}) => {
   let navigatetoLoginPage = useNavigate()
   const AppLogout = async () => {
     try {
+      const {data:{data}} = await axios.post('http://localhost:5000/api/logout', {}, 
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      );
+      localStorage.setItem('token', null);
       navigatetoLoginPage("/")
     }
     catch (err) {

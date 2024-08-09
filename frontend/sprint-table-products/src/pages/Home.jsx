@@ -1,17 +1,36 @@
 import Header from "../components/Header"
 import Sidebar from "../components/Sidebar"
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import "./Home.css"
-import { useContext, useEffect } from "react"
-import { AuthContext } from "../components/AuthContext"
+import {  useEffect } from "react"
+// import { AuthContext } from "../components/AuthContext"
 import axios from "axios"
 
 
 const Home = () => {
-    const { auth } = useContext(AuthContext)
+    // const { auth } = useContext(AuthContext)
+    // const [homeAuth, setHomeAuth] = useState({ token: auth.token })
+    let navigate=useNavigate()
     useEffect(() => {
-        console.log("Token:", auth.token);
-    }, [auth.token]);
+        // console.log("Token:", auth.token);
+        const authroizeomePage = async () => {
+            try {
+              const {data:{data}} = await axios.post('http://localhost:5000/api/authorize', {}, 
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                  }
+                }
+              );
+            } catch (error) {
+               alert(error.response.data.message)
+               navigate("/")
+              console.error('Error fetching data:', error);
+            }
+          };
+          authroizeomePage();
+
+    }, []);
     return (
         <>
             <div className="fullHomePage">

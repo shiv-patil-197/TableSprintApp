@@ -15,6 +15,7 @@ const categoryRoutes = require('./routes/categoryRoutes');
 app.use('/api', authRoutes);
 app.use('/api', categoryRoutes);
 
+
 const PORT = process.env.PORT || 5000;
 
 connectDB().then(() => {
@@ -22,3 +23,4 @@ connectDB().then(() => {
     console.log(`Server is running on port ${PORT}`);
   });
 });
+

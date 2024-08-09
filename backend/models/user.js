@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema(
         confirmPassword: {
             type: String,
             required: { value: true, message: "confirmPassword is mandatory" }
-        }
+        },
     }, { timeStamps: true }    
 );
 

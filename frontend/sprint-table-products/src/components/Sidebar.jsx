@@ -1,5 +1,5 @@
 // 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Sidebar.css';  // Import the CSS file
 import { TfiHome } from "react-icons/tfi";
@@ -18,7 +18,7 @@ const Sidebar = () => {
                         <span className="sidebar-arrow">▶</span>
                     </Link>
                 </li>
-                <li>
+                <li >
                     <Link to="category" className="sidebar-link">
                         <span className="sidebar-icon"><BiCategoryAlt/></span>
                         <span className="sidebar-text">Category</span>
