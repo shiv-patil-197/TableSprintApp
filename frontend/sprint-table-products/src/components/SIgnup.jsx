@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { config } from "../Configuration";
 function Signup() {
-    const { register, handleSubmit, formState: { errors },watch } = useForm();
+    const { register, handleSubmit, formState: { errors },getValues } = useForm();
 
     let SendFormData = async (dataa) => {
  
@@ -73,7 +73,7 @@ function Signup() {
                             <div>
                                 <input  type="password" placeholder="Enter confirmPassword" {...register("confirmPassword", {
                                     required: { value: true, message: "confirmPassword is Mandatory" }, 
-                                    validate: (value) => value === password || "The passwords do not match"
+                                    validate: (value) => value === getValues("password") || "The passwords do not match"
                                 })} />
                             </div>
                             <div style={{ color: "red", fontSize:"10px" }}>{errors.confirmPassword?.message}</div>
