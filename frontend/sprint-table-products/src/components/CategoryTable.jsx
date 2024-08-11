@@ -2,13 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
+import { config } from '../Configuration';
 import './CategoryTable.css';
 
 const CategoryTable = () => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/categories')
+        axios.get(`${config.baseURL}/api/categories`)
             .then(response => {
                 setCategories(response.data);
             })
@@ -42,7 +43,7 @@ const CategoryTable = () => {
     };
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:5000/categories/${id}`)
+        axios.delete(`${config.baseURL}/api/categories/${id}`)
             .then(() => {
                 setCategories(categories.filter(category => category.id !== id));
             })
