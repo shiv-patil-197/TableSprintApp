@@ -72,6 +72,9 @@
 .sidebar-link:hover {
     background-color: #e8e3659f;
 }
+.sidebar-link:active {
+    background-color: #c45f0d9f;
+}
 .sidebar-link:hover .sidebar-arrow{
     color: black;
 }

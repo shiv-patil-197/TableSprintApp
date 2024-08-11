@@ -2,6 +2,7 @@ import SignupStyle from "./Signup.module.css"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { config } from "../Configuration";
 function Signup() {
     const { register, handleSubmit, formState: { errors },watch } = useForm();
     let NavigateToLoginPage = useNavigate()
@@ -9,7 +10,7 @@ function Signup() {
     let SendFormData = async (dataa) => {
  
     try{ 
-      let {data}= await axios.post("http://localhost:5000/api/register", dataa)
+      let {data}= await axios.post(`${config.baseURL}/api/register`, dataa)
                
                 alert (data.message)
      }

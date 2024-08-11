@@ -1,7 +1,7 @@
 const Products =()=>{
     return (
         <>
-        <div>Products Page</div>
+        <div><h1>Products Page</h1></div>
         </>
     )
  }

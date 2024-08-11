@@ -1,19 +1,20 @@
 import axios from "axios";
 import "./DeleteCategory.css";
+import {config} from "../Configuration"
 
 const DeleteCategory = ({ categoryId, cancel }) => {
   const deleteCategory = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/categories/${categoryId}`, 
+      await axios.delete(`${config.baseURL}/api/categories/${categoryId}`, 
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
         });
       // Reload(!load);
-      window.location.reload(); // Reload the page to update the category list
-    } catch (err) {
-      alert(err)
+      window.location.reload();// Reload the page to update the category list
+    } catch (error) {
+      alert(error.response.data.message)
       console.log(err);
     }
   };

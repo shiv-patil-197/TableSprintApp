@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import "./EditCategory.css"
+import {config} from "../Configuration"
 
 const EditCategory = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const EditCategory = () => {
 
   useEffect(() => {
     // Fetch category details to populate the form
-    axios.get(`http://localhost:5000/api/category/${id}`,{
+    axios.get(`${config.baseURL}/api/category/${id}`,{
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -36,15 +37,15 @@ const EditCategory = () => {
     }
 
     try {
-      await axios.put(`http://localhost:5000/api/categories/${id}`, formData, {
+      await axios.put(`${config.baseURL}/api/categories/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       reset();
       navigate('/home/category');
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      alert(error.response.data.message)
     }
   };
 

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "./AddCategory.css"
+import {config} from "../Configuration"
 
 const AddCategory = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -17,7 +18,7 @@ const AddCategory = () => {
     formData.append('status', status);
 
     try {
-      await axios.post('http://localhost:5000/api/categories', formData, {
+      await axios.post(`${config.baseURL}/api/categories`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -27,7 +28,8 @@ const AddCategory = () => {
         navigate('/home/category');
       })
       .catch(error => console.error('Error adding category:', error));
-    } catch (err) {
+    } catch (error) {
+      alert(error.response.data.message)
       console.log(err);
     }
   };
@@ -35,7 +37,7 @@ const AddCategory = () => {
   useEffect(() => {
     const authroizeomePage = async () => {
         try {
-         await axios.post('http://localhost:5000/api/authorize', {}, 
+         await axios.post(`${config.baseURL}/api/authorize`, {}, 
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`

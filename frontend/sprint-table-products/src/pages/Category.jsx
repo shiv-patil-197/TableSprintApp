@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useTable } from 'react-table';
 import categoryStyle from "./Category.module.css";
 import DeleteCategory from './DeleteCategory';
-import { AuthContext } from "../components/AuthContext"
+import {config} from "../Configuration"
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
@@ -34,7 +34,7 @@ console.log("reRendered");
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const {data:{data}} = await axios.get('http://localhost:5000/api/categories', {
+        const {data:{data}} = await axios.get(`${config.baseURL}/api/categories`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
@@ -42,6 +42,7 @@ console.log("reRendered");
         console.log(data);
         setCategories(data);
       } catch (error) {
+        alert(error.response.data.message)
         console.error('Error fetching data:', error);
       }
     };
@@ -52,7 +53,7 @@ console.log("reRendered");
     () => [
       { Header: 'Id', accessor: '_id' },
       { Header: 'Category name', accessor: 'name' },
-      { Header: 'Image', accessor: 'image', Cell: ({ value }) => <img src={`http://localhost:5000/uploads/${value}`} alt="Category" width="80" height="50" /> },
+      { Header: 'Image', accessor: 'image', Cell: ({ value }) => <img src={`${config.baseURL}/uploads/${value}`} alt="Category" width="80" height="50" /> },
       { Header: 'Status', accessor: 'status', Cell: ({ value }) => <span className={value === 'Active' ? 'active' : 'inactive'}>{value}</span> },
       { Header: 'Sequence', accessor: 'sequence' },
       {

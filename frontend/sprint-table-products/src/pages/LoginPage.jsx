@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate  } from "react-router-dom";
 import Signup from '../components/SIgnup';
 import axios from "axios";
+import {config} from "../Configuration"
 // import { AuthContext } from "../components/AuthContext"
 
 const LoginPage = () => {
@@ -15,7 +16,7 @@ const LoginPage = () => {
         console.log(user,pass);
      try{   
        
-        let {data:{data, token ,error,message}}=await axios.post("http://localhost:5000/api/login",{ username: user , password:pass});  
+        let {data:{data, token ,error,message}}=await axios.post(`${config.baseURL}/api/login`,{ username: user , password:pass});  
         if(error){
             alert(message);
         }else {
@@ -27,7 +28,7 @@ const LoginPage = () => {
 
      }
      catch(err){
-        alert(err.message)
+        alert(err.response.data.message)
         console.log(err);
      }
     }

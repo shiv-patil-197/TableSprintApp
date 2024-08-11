@@ -1,7 +1,7 @@
 const Subcategory =()=>{
     return (
         <>
-        <div>Subcategory Page</div>
+        <div><h1>Subcategory Page</h1></div>
         </>
     )
  }

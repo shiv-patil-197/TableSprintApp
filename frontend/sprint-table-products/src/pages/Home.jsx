@@ -5,6 +5,7 @@ import "./Home.css"
 import {  useEffect } from "react"
 // import { AuthContext } from "../components/AuthContext"
 import axios from "axios"
+import {config} from "../Configuration"
 
 
 const Home = () => {
@@ -15,7 +16,7 @@ const Home = () => {
         // console.log("Token:", auth.token);
         const authroizeomePage = async () => {
             try {
-              const {data:{data}} = await axios.post('http://localhost:5000/api/authorize', {}, 
+              const {data:{data}} = await axios.post(`${config.baseURL}/api/authorize`, {}, 
                 {
                   headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
