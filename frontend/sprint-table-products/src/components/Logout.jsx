@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import "./Logout.css"
 import axios from "axios";
+import { config } from "../Configuration";
 const Logout = ({cancel}) => {
   let navigatetoLoginPage = useNavigate()
   const AppLogout = async () => {
     try {
-      const {data:{data}} = await axios.post('http://localhost:5000/api/logout', {}, 
+      const {data:{data}} = await axios.post(`${config.baseURL}/api/logout`, {}, 
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`

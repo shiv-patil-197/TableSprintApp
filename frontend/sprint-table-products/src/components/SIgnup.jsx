@@ -5,7 +5,6 @@ import axios from "axios";
 import { config } from "../Configuration";
 function Signup() {
     const { register, handleSubmit, formState: { errors },watch } = useForm();
-    let NavigateToLoginPage = useNavigate()
 
     let SendFormData = async (dataa) => {
  
@@ -18,10 +17,7 @@ function Signup() {
       alert(error.response.data.message)
      }
     }
-    const password = watch("password", ""); // Watch the password field to compare with confirmPassword
-    let NavigateToLogin = () => {
-        NavigateToLoginPage("/login")
-    }
+   
     return (
         <>
             <div className={SignupStyle.mainDiv}>
