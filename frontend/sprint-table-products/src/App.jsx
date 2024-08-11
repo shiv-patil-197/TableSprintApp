@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Dashboard from './components/Dashboard';
 import AddCategory from './pages/AddCategory';
 import EditCategory from './pages/EditCategory';
+import NotFound from './components/NotFound';
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/reset-password" element={<ResetPasswordPage />} />
                     <Route path="/home/category/add-category" element={<AddCategory />} />
                     <Route path="/home/category/edit-category/:id" element={<EditCategory />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </Router>
     );
