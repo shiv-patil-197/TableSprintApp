@@ -1,6 +1,6 @@
 // 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './Sidebar.css';  // Import the CSS file
 import { TfiHome } from "react-icons/tfi";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -12,32 +12,32 @@ const Sidebar = () => {
            
             <ul className="sidebar-menu">
                 <li>
-                    <Link to="" className="sidebar-link">
+                    <NavLink to="" className="sidebar-link">
                         <span className="sidebar-icon"> <TfiHome /></span>
                         <span className="sidebar-text">Dashboard</span>
                         <span className="sidebar-arrow">▶</span>
-                    </Link>
+                    </NavLink>
                 </li>
                 <li >
-                    <Link to="category" className="sidebar-link">
+                    <NavLink to="category" className="sidebar-link">
                         <span className="sidebar-icon"><BiCategoryAlt/></span>
                         <span className="sidebar-text">Category</span>
                         <span className="sidebar-arrow">▶</span>
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
-                    <Link to="subcategory" className="sidebar-link">
+                    <NavLink to="subcategory" className="sidebar-link">
                         <span className="sidebar-icon"><BsListTask /></span>
                         <span className="sidebar-text">Subcategory</span>
                         <span className="sidebar-arrow">▶</span>
-                    </Link>
+                    </NavLink>
                 </li>
                 <li>
-                    <Link to="products" className="sidebar-link">
+                    <NavLink to="products" className="sidebar-link">
                         <span className="sidebar-icon"><BsBoxSeam /></span>
                         <span className="sidebar-text">Products</span>
                         <span className="sidebar-arrow">▶</span>
-                    </Link>
+                    </NavLink>
                 </li>
             </ul>
         </div>
