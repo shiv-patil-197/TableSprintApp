@@ -62,7 +62,7 @@ const login = async (req, res) => {
             return res.json({ error: true, message: "User not found" });
         }
  
-        console.log(user);
+        // console.log(user);
         
         // decryptedPassword=decrypt(user.password);
         // decryptedConfirmPassword=decrypt(user.confirmPassword);
