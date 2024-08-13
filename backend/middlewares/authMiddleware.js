@@ -21,7 +21,7 @@ let authenticateToken = (req, res, next) => {
   console.log(token);
 
   if (!token || token==="null") {
-    return res.status(401).json({ message: 'Unauthorized: No token provided' });
+    return res.status(401).json({ message: 'Unauthorized: please log in' });
   }
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {

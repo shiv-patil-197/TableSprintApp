@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, memo } from 'react';
 import { RiAccountCircleLine  } from "react-icons/ri";
 import './Header.css';
 import Logout from './Logout';
@@ -22,4 +22,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default memo(Header);

@@ -1,8 +1,8 @@
 import SignupStyle from "./Signup.module.css"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { config } from "../Configuration";
+import { memo } from "react";
 function Signup() {
     const { register, handleSubmit, formState: { errors },getValues } = useForm();
 
@@ -92,4 +92,4 @@ function Signup() {
         </>
     )
 }
-export default Signup
+export default memo(Signup)
