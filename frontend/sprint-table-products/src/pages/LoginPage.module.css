@@ -3,14 +3,17 @@
     justify-content: start;
     align-items: center;
     gap: 150px;
+    height: auto;
+    width: 50vw;
+
 }
 .mainDiv {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: auto;
     background-color: #f4f4f4;
-    width: 400px;
+    width: 100%;
 }
 
 .subDiv {

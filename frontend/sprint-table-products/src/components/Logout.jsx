@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./Logout.css"
 import axios from "axios";
 import { config } from "../Configuration";
+import { memo } from "react";
 const Logout = ({cancel}) => {
   let navigatetoLoginPage = useNavigate()
   const AppLogout = async () => {
@@ -37,4 +38,4 @@ const Logout = ({cancel}) => {
     </div>
   )
 }
-export default Logout
+export default memo(Logout)

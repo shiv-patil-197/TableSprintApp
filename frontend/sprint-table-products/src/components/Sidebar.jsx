@@ -1,6 +1,6 @@
 // 
-import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { memo } from 'react';
+import { NavLink } from 'react-router-dom';
 import './Sidebar.css';  // Import the CSS file
 import { TfiHome } from "react-icons/tfi";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -44,4 +44,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+export default memo(Sidebar);

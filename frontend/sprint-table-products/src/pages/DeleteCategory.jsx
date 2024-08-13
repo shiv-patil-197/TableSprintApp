@@ -1,6 +1,7 @@
 import axios from "axios";
 import "./DeleteCategory.css";
 import {config} from "../Configuration"
+import { memo } from "react";
 
 const DeleteCategory = ({ categoryId, cancel }) => {
   const deleteCategory = async () => {
@@ -33,4 +34,4 @@ const DeleteCategory = ({ categoryId, cancel }) => {
   );
 };
 
-export default DeleteCategory;
+export default memo(DeleteCategory)
