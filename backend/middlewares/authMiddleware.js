@@ -4,7 +4,7 @@ let generateToken = (req, res, next) => {
   try {
     const { email, password } = req.body;
     const payload = { email, password };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '10m' });
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15m' });
     if (!token) {
       return res.json({ message: "Token not generated" });
     }

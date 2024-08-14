@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
-import "./EditCategory.css"
-import {config} from "../Configuration"
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import "./EditCategory.css";
+import { config } from "../Configuration";
 
 const EditCategory = () => {
   const { id } = useParams();
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    // Fetch category details to populate the form
-    axios.get(`${config.baseURL}/api/category/${id}`,{
+      // Fetch category details to populate the form
+    axios.get(`${config.baseURL}/api/category/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -43,11 +44,31 @@ const EditCategory = () => {
         },
       });
       reset();
-      navigate('/home/category');
+      // Extract the current page from the location state
+      const currentPage = new URLSearchParams(location.search).get('page') || 1;
+      navigate(`/home/category?page=${currentPage}`);
     } catch (error) {
-      alert(error.response.data.message)
+      alert(error.response.data.message);
     }
   };
+
+  useEffect(() => {    
+    const authorizePage = async () => {
+
+      try {
+        await axios.post(`${config.baseURL}/api/authorize`, {}, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+      } catch (error) {
+        alert(error.response.data?.message);
+        navigate("/");
+        console.error('Error fetching data:', error);
+      }
+    };
+    authorizePage();
+  }, []);
 
   return (
     <div className="edit-category">

@@ -1,13 +1,7 @@
 const User = require('../models/user');
-// const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-// const algorithm = 'aes-256-cbc';
-// // const secretKey = crypto.randomBytes(32);
-// const secretKey = "b7a5e9f3b4c2d1e0f8e4b7e9b2d3f1e4";
-// // const iv = crypto.randomBytes(16);
-// const iv = "a1b2c3d43cf6d7c8";
 
 const register = async (req, res) => {
     try {
@@ -18,8 +12,6 @@ const register = async (req, res) => {
         if(password!==confirmPassword){
             return res.status(400).json({ title: "Bad Request", message: "password and confirmPassword do not match" });
         }
-        // const encryptedpassword = encrypt(password);
-        // const encryptedCpassword = encrypt(confirmPassword);
         const hashedPassword =  await bcrypt.hash(password, 10);
         const hashedCPassword = await bcrypt.hash(confirmPassword, 10);
        let data= await User.create({ fn, password:hashedPassword, ln, number, email, confirmPassword:hashedCPassword });
@@ -36,20 +28,6 @@ const register = async (req, res) => {
     }
 };
 
-// function encrypt(text) {
-//     const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
-//     let encrypted = cipher.update(text, 'utf8', 'hex');
-//     encrypted += cipher.final('hex');
-//     return encrypted;
-// }
-
-// function decrypt(encryptedText) {
-//     const decipher = crypto.createDecipheriv(algorithm, secretKey, iv);
-//     let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
-//     decrypted += decipher.final('utf8');
-//     return decrypted;
-// }
-
 const login = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -61,20 +39,6 @@ const login = async (req, res) => {
         if (!user) {
             return res.json({ error: true, message: "User not found" });
         }
- 
-        // console.log(user);
-        
-        // decryptedPassword=decrypt(user.password);
-        // decryptedConfirmPassword=decrypt(user.confirmPassword);
-
-        // if (decryptedConfirmPassword !== password) {
-        //       return res.json({ error: true, message: "Incorrect password" });
-        // }
-        // {
-        //     ...user._doc,  // Spread the other user details
-        //     password: decryptedPassword,
-        //     confirmPassword: decryptedConfirmPassword
-        // }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {

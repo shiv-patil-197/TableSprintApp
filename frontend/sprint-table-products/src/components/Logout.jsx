@@ -7,7 +7,7 @@ const Logout = ({cancel}) => {
   let navigatetoLoginPage = useNavigate()
   const AppLogout = async () => {
     try {
-      const {data:{data}} = await axios.post(`${config.baseURL}/api/logout`, {}, 
+        await axios.post(`${config.baseURL}/api/logout`, {}, 
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -17,8 +17,9 @@ const Logout = ({cancel}) => {
       localStorage.setItem('token', null);
       navigatetoLoginPage("/")
     }
-    catch (err) {
-      console.log(err);
+    catch (error) {
+      console.log(error);
+      alert(error)
     }
 
   }

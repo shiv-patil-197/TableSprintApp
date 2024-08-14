@@ -9,7 +9,7 @@ const AddCategory = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = async ({id,name, sequence, image, status}) => {
+  const onSubmit = async ({name, sequence, image, status}) => {
 
     const formData = new FormData();
     formData.append('name', name);
@@ -29,7 +29,7 @@ const AddCategory = () => {
       })
       .catch(error => console.error('Error adding category:', error));
     } catch (error) {
-      alert(error.response.data.message)
+      alert(error.response.data?.message)
       console.log(err);
     }
   };
@@ -45,7 +45,7 @@ const AddCategory = () => {
             }
           );
         } catch (error) {
-           alert(error.response.data.message)
+           alert(error.response.data?.message)
            navigate("/")
           console.error('Error fetching data:', error);
         }
@@ -63,7 +63,7 @@ const AddCategory = () => {
           <label>Category Name</label>
           <input
             type="text"
-            {...register('name', { required: 'Category Name is required' })}
+            {...register('name', { required: 'Category Name is required' , maxLength:{value:30, message:"max length is 30"}})}
           />
           {errors.name && <p>{errors.name.message}</p>}
         </div>
