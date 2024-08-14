@@ -1,4 +1,3 @@
-const { GridFSBucket } = require('mongodb');
 const Category = require('../models/category');
 
 const getCategories = async (req, res) => {
