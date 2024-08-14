@@ -24,7 +24,7 @@ const Home = () => {
                 }
               );
             } catch (error) {
-               alert(error.response.data.message)
+               alert(error.response.data?.message)
                navigate("/")
               console.error('Error fetching data:', error);
             }
