@@ -59,7 +59,16 @@ const Category = () => {
       { Header: 'Id', accessor: 'serialNo' },
       { Header: 'Category name', accessor: 'name' },
       { Header: 'Image', accessor: 'image', Cell: ({ value }) => <img src={`${config.baseURL}/uploads/${value}`} alt="Category" width="80" height="60" /> },
-      { Header: 'Status', accessor: 'status', Cell: ({ value }) => <span className={value === 'Active' ? 'active' : 'inactive'}>{value}</span> },
+      // { Header: 'Status', accessor: 'status', Cell: ({ value }) => <span className={value === 'Active' ? 'active' : 'inactive'}>{value}</span> },
+      { 
+        Header: 'Status', 
+        accessor: 'status', 
+        Cell: ({ value }) => (
+          <span className={value === 'Active' ? categoryStyle.active : categoryStyle.inactive}>
+            {value}
+          </span>
+        ),
+      },
       { Header: 'Sequence', accessor: 'sequence' },
       {
         Header: 'Action', accessor: 'action', Cell: ({ row }) => (
