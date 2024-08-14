@@ -3,7 +3,6 @@ const connectDB = require('./config/database');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
-const { GridFSBucket } = require('mongodb');
 
 const app = express();
 app.use(cors());
