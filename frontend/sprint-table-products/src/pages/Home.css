@@ -1,4 +1,4 @@
-.fullHomePage{
+.fullHomePage {
     height: 100vh;
     width: 1700px;
     display: flex;
@@ -7,14 +7,13 @@
     background-color: #e6e6e6;
     margin-left: -50px;
 }
+
 .app {
     display: flex;
     flex-direction: column;
-    height:90%;
+    height: 90%;
     width: 60%;
-    margin-right:280px;
-
-    /* border: 2px solid rgb(78, 16, 201); */
+    margin-right: 280px;
 }
 
 .main-content {
@@ -22,9 +21,11 @@
     flex: 1;
 }
 
-.outletDiv{
+.outletDiv {
+    padding: 5px;
     display: flex;
     justify-content: center;
-    align-items: center; 
-width: 76%;
+    align-items: center;
+    width: 76%;
+    background-color: #fff;
 }
