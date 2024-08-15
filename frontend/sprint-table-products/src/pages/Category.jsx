@@ -5,6 +5,7 @@ import { useTable } from 'react-table';
 import categoryStyle from './Category.module.css';
 import DeleteCategory from './DeleteCategory';
 import { config } from '../Configuration';
+import { RiContactsBookUploadLine } from 'react-icons/ri';
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
@@ -58,7 +59,7 @@ const Category = () => {
     () => [
       { Header: 'Id', accessor: 'serialNo' },
       { Header: 'Category name', accessor: 'name' },
-      { Header: 'Image', accessor: 'image', Cell: ({ value }) => <img src={`${config.baseURL}/uploads/${value}`} alt="Category" width="80" height="60" /> },
+      { Header: 'Image', accessor: 'image', Cell: ({ value }) => <img src={`${config.baseURL}/uploads/${value}`} alt="Category" width="80" height="57" /> },
       { 
         Header: 'Status', 
         accessor: 'status', 
@@ -86,7 +87,7 @@ const Category = () => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
 
   return (
-  <>
+  <div className={categoryStyle.wholeCategory}>
     <div className={categoryStyle.category}>
       <header>
         <h1>Category</h1>
@@ -115,16 +116,16 @@ const Category = () => {
           })}
         </tbody>
       </table>
-      <div className={categoryStyle.pagination}>
-        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-        <span>Page {currentPage} of {totalPages}</span>
-        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
-      </div>
       <div className={categoryStyle.deleteDiv} ref={deleteRef}>
         {deleteCategoryId && <DeleteCategory categoryId={deleteCategoryId} cancel={cancelDelete} />}
       </div>
     </div>
-  </>
+    <div className={categoryStyle.pagination}>
+        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+        <span>Page {currentPage} of {totalPages}</span>
+        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
+      </div>
+  </div>
   );
 };
 
